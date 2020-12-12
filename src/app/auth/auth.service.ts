@@ -45,6 +45,7 @@ export class AuthService {
   }
 
   logout(): void {
+    // Sign out of Firebase auth
     firebase.auth().signOut().then(() => {
       // Sign-out successful.
       this.isLoggedIn = false;

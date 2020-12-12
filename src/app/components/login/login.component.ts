@@ -55,18 +55,15 @@ export class LoginComponent implements OnInit {
   constructor(public authService: AuthService, public router: Router, private ngZone: NgZone) { }
 
   ngOnInit(): void {
-    if (!this.authService.isLoggedIn) {
-
-    }
-
+    // Watch Firebase AuthStateChanged
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        // Redirect the user
+        // Logged in, redirect the user
         console.log(`redirect logged in user to root page`);
         this.ngZone.run(() => this.router.navigateByUrl('/')).then();
       } else {
         console.log(`redirect logged out user to login page`);
-        // User is signed out.
+        // User is signed out, send back to login & show FirebaseUI
         this.ngZone.run(() => this.router.navigateByUrl('/login')).then(() => {
           console.log('show login UI');
           this.ui.start('#firebaseui-auth-container', uiConfig);
